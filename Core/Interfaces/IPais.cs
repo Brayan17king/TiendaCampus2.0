@@ -8,5 +8,6 @@ namespace Core.Interfaces;
 
 public interface IPais : IGenericRepository<Pais>
 {
-    
+    Task ToListAsync();
+    Task ToString(string nombre);
 }
