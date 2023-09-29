@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
+using Core.Interfaces;
 using Infraestructure.Data;
 using Infraestructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +13,9 @@ namespace API.Controllers;
 
 public class PaisController : BaseController
 {
-    private readonly UnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public PaisController(UnitOfWork unitOfWork)
+    public PaisController(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
