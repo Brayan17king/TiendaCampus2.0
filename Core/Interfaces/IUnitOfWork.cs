@@ -10,6 +10,6 @@ namespace Core.Interfaces
         ICiudad Ciudades {get;}
         IDepartamento Departamentos {get;}
         IPais Paises {get;} 
-        Task<int> saveAsync();
+        Task<int> SaveAsync();
     }
 }

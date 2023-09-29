@@ -5,60 +5,65 @@ using System.Threading.Tasks;
 using Core.Interfaces;
 using Infraestructure.Data;
 using Infraestructure.Repositories;
+using Infrastructure.Data;
 
-namespace Infraestructure.UnitOfWork
+namespace Infrastructure.UnitOfWork;
+
+public class UnitOfWork : IUnitOfWork, IDisposable
 {
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    private readonly TiendaCampusContext _context;
+    private IPais _Paises;
+    private IDepartamento _Departamentos;
+    private ICiudad _Ciudades;
+
+    public UnitOfWork(TiendaCampusContext context)
     {
-        private readonly TiendaCampusContext _context;
+        _context = context;
+    }
 
-        private IPais _Paises;
-        private IDepartamento _Departamentos;
-        private ICiudad _Ciudades;
-
-        public UnitOfWork(TiendaCampusContext context)
+    public IPais Paises
+    {
+        get
         {
-            _context = context;
-        }
-
-        public IPais Paises
-        {
-            get{
-                if (_Paises == null){
-                    _Paises = new PaisRepository(_context);
-                }
-                return _Paises;
+            if (_Paises == null)
+            {
+                _Paises = new PaisRepository(_context);
             }
+            return _Paises;
         }
+    }
 
-        public IDepartamento Departamentos
+    public IDepartamento Departamentos
+    {
+        get
         {
-            get{
-                if (_Departamentos == null){
-                    _Departamentos = new DepartamentoRepository(_context);
-                }
-                return _Departamentos;
+            if (_Departamentos == null)
+            {
+                _Departamentos = new DepartamentoRepository(_context);
             }
+            return _Departamentos;
         }
+    }
 
-        public ICiudad Ciudades
+    public ICiudad Ciudades
+    {
+        get
         {
-            get{
-                if (_Ciudades == null){
-                    _Ciudades = new CiudadRepository(_context);
-                }
-                return _Ciudades;
+            if (_Ciudades == null)
+            {
+                _Ciudades = new CiudadRepository(_context);
             }
+            return _Ciudades;
         }
+    }
 
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+    public void Dispose()
+    {
+        _context.Dispose();
+    }
 
-        public Task<int> saveAsync()
-        {
-            throw new NotImplementedException();
-        }
+    public Task<int> SaveAsync()
+    {
+        return _context.SaveChangesAsync();
     }
 }
